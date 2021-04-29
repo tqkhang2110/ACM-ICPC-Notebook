@@ -2,6 +2,14 @@
 
 using namespace std;
 
+static char buf[450 << 20];
+void* operator new(size_t s) {
+	static size_t i = sizeof buf;
+	assert(s < i);
+	return (void*)&buf[i -= s];
+}
+void operator delete(void*) {}
+
 const int INF = numeric_limits<int>::max();
 const int MOD = 1000000007;
 const int MAX = 100005;
